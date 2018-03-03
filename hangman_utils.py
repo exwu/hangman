@@ -27,11 +27,9 @@ def get_words_of_length(length, words):
 
 def get_matches(pattern, misses, words):
     matches = get_words_of_length(len(pattern), words)
-    print("length", matches)
 
     # Remove words that have letters that have already been guessed
     matches = [word for word in matches if not has_any_char(misses, word)]
-    print("misses", matches)
 
     # Remove words that don't fit the pattern
     constraints = pattern_to_letter_index(pattern)
@@ -39,11 +37,9 @@ def get_matches(pattern, misses, words):
         match_sets = [get_single_match(letter, index, matches) for letter, index in constraints]
         shortest = min(match_sets, key=lambda m: len(m))
         matches = [word for word in shortest if in_all_sets(word, match_sets)]
-    print("pattern", matches)
         
     # Remove words with letters that are already in the pattern
     matches = [match for match in matches if not has_extra_char(pattern, match)]
-    print("imperfect match", matches)
     return matches
 
 def has_any_char(misses, word):
